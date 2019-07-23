@@ -1,0 +1,49 @@
+
+TARGET = hello
+#SRC=main.cpp hello.cpp factorial.cpp
+SOURCE  =$(wildcard *.cpp)
+OBJECTS = $(patsubst %.cpp, %.o, $(SOURCE))
+#OBJECTS =$(SRC:.cpp=.o)
+PREFIX=/usr/local/bin
+
+CC=g++
+CFLAGS=-c -Wall -MD
+
+
+#.PHONY: all clean install uninstall
+
+#firsttarget:
+#	@echo "The first one is the default"
+
+#all: $(TARGET)
+
+$(TARGET): $(OBJECTS)
+	$(CC) $^ -o $@
+
+#.cpp.o:
+#	$(CC) $(CFLAGS) $< -o $@
+%.o: %.cpp
+	$(CC) $(CFLAGS) $<
+
+#main.o: hello.h bye.h
+#hello.o: hello.h
+#bye.o: bye.h
+include $(wildcard *.d)
+
+#main.o:
+#	$(CC) $(CFLAGS) main.cpp
+
+#hello.o:
+#	$(CC) $(CFLAGS) hello.cpp
+
+#factorial.o:
+#	$(CC) $(CFLAGS) factorial.cpp
+
+#install:
+#	install ./hello $(PREFIX)
+
+#uninstall:
+#	rm -rf $(PREFIX)/$(TARGET)
+
+clean:
+	rm -f *.o hello *.d
